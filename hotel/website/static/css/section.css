@@ -8,7 +8,7 @@ section {
   display: flex;
   flex-direction: column;
   /* background: url("edvin-johansson-rlwE8f8anOc-unsplash (1).jpg") ; */
-  background-image: url("jason-briscoe-cwr02zo0gP8-unsplash (1).jpg");
+  background-image: url("../images/jason-briscoe-cwr02zo0gP8-unsplash (1).jpg");
   width: 100%;
   height: 1200px;
   justify-content: center;
