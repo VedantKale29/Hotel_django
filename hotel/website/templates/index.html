@@ -5,10 +5,10 @@
   <head>
     <meta charset="UTF-8" />
     <title>Vacation Rentals, Cabins, Beach Houses, ...</title>
-    <link rel="stylesheet" href="..\static\css\style.css" />
-    <link rel="stylesheet" href="..\static\css\section.css" />
-    <link rel="stylesheet" href="..\static\css\footer.css" />
-    <link rel="icon" href="..\static\images\title_logo.png" />
+    <link rel="stylesheet" href={% static "..\static\css\style.css" %} />
+    <link rel="stylesheet" href={% static "..\static\css\section.css" %} />
+    <link rel="stylesheet" href={% static "..\static\css\footer.css" %} />
+    <link rel="icon" href={% static "..\static\images\title_logo.png" %} />
 
   </head>
   <body>
@@ -22,23 +22,23 @@
         <li><a href="#">Become a Host</a></li>
         <li>
           <a href="#"
-            ><img class="web-icon" src="..\static\images\web-icon.png" alt=""
+            ><img class="web-icon" src={% static "..\static\images\web-icon.png" %} alt=""
           /></a>
         </li>
         <div class="user-icon">
           <button class="dropdown-button">
-            <img class="menu-icon" src="..\static\images\menu-icon.png" alt="" />
+            <img class="menu-icon" src={% static "..\static\images\menu-icon.png" %} alt="" />
           </button>
           <div class="dropdown-content">
-            <li><a href="login.html">Sign Up</a></li>
-            <li><a href="login.html">Sign In</a></li>
-            <li><a href="contact.html">Contact us</a></li>
+            <li><a href="/login/">Sign Up</a></li>
+            <li><a href="/login/"/>Sign In</a></li>
+            <li><a href="/contact/">Contact us</a></li>
             
 
           </div>
           <li>
             <a href="#"
-              ><img class="icon" src="..\static\images\user-icon.png" alt=""
+              ><img class="icon" src={% static "..\static\images\user-icon.png" %} alt=""
             /></a>
           </li>
         </div>
@@ -64,7 +64,7 @@
           <h4>Add guests</h4>
         </div>
         <div class="search">
-          <img class="search-icon" src="..\static\images\search.png" alt="" />
+          <img class="search-icon" src={% static "..\static\images\search.png" %} alt="" />
         </div>
       </div>
     </div>
@@ -73,16 +73,16 @@
       <div class="main-section">
         <img
           class="bg-image"
-          src="..\static\images\hallstatt-3609863_960_720.jpg"
+          src={% static "..\static\images\hallstatt-3609863_960_720.jpg" %}
           alt=""
         />
         <div class="image-text-1">
           <p class="not-sure">Not sure where to? Perfect</p>
-          <button class="flex-btn"><a href="Hom.html">I'm flexible</a></button>
+          <button class="flex-btn"><a href="/Hom/">I'm flexible</a></button>
         </div>
       </div>
       <div class="airBnB-gift-card">
-        <img class="gift-card-image" src="..\static\images\giftcard.png" alt="" />
+        <img class="gift-card-image" src={% static "..\static\images\giftcard.png" %} alt="" />
         <div class="image-text-2">
           <p class="intro">Introducing</p>
           <p class="airbnb">ABCD</p>
@@ -94,28 +94,28 @@
         <h1 class="inspiration-trip-title">Inspiration for your next trip</h1>
         <div class="inspiration-trip-location">
           <div class="city">
-            <img class="location-image" src="..\static\images\fortportal.jpg" alt="" />
+            <img class="location-image" src={% static "..\static\images\fortportal.jpg" %} alt="" />
             <div class="city-detail">
               <p class="city-name">Sinhagad</p>
               <p class="city-distance">252 kilometers</p>
             </div>
           </div>
           <div class="city">
-            <img class="location-image" src="..\static\images\kamp.jpg" alt="" />
+            <img class="location-image" src={% static "..\static\images\kamp.jpg" %} alt="" />
             <div class="city-detail-1">
               <p class="city-name">Kampala</p>
               <p class="city-distance">302 kilometers</p>
             </div>
           </div>
           <div class="city">
-            <img class="location-image" src="..\static\images\jinja.jpg" alt="" />
+            <img class="location-image" src={% static "..\static\images\jinja.jpg" %} alt="" />
             <div class="city-detail-2">
               <p class="city-name">Lonavala</p>
               <p class="city-distance">352 kilometers</p>
             </div>
           </div>
           <div class="city">
-            <img class="location-image" src="..\static\images\kab.jpg" alt="" />
+            <img class="location-image" src={% static "..\static\images\kab.jpg" %} alt="" />
             <div class="city-detail-3">
               <p class="city-name">Forest</p>
               <p class="city-distance">442 kilometers</p>
@@ -128,16 +128,16 @@
         <div class="discover-images">
           <div>
             <img
-              src="..\static\images\vojtech-bruzek-Yrxr3bsPdS0-unsplash.jpg"
+              src={% static "..\static\images\vojtech-bruzek-Yrxr3bsPdS0-unsplash.jpg" %}
               alt=""
               class="discover-image-1"
             />
             <p class="experiences">Things to do on your trip</p>
-            <button class="experience-btn"><a href="Hom.html">Experiences</a></button>
+            <button class="experience-btn"><a href="/Hom/">Experiences</a></button>
           </div>
           <div>
             <img
-              src="..\static\images\mountains-1587287_960_720.jpg"
+              src={% static "..\static\images\mountains-1587287_960_720.jpg" %}
               alt=""
               class="discover-image-2"
             />
@@ -149,14 +149,14 @@
       <div class="bottom-image-section">
         <img
           class="bottom-image"
-          src="..\static\images\mountains-190055_960_720 (3).jpg"
+          src={% static "..\static\images\mountains-190055_960_720 (3).jpg" %}
           alt=""
         />
         <div class="bottom-image-text">
           <p class="question">Questions</p>
           <p class="question">about?</p>
           <p class="question">travelling?</p>
-          <button class="ask-superhost"><a href="explore.html"><b>Explore</b></a></button>
+          <button class="ask-superhost"><a href="/explore/"><b>Explore</b></a></button>
         </div>
       </div>
       <div class="future-getaways">
@@ -298,9 +298,9 @@
           <div class="languange-currency">
             <div>English (US)</div>
             <div>IN</div>
-            <img src="..\static\images\facebook.png" alt="" />
-            <img src="..\static\images\twitte.png" alt="" />
-            <img src="..\static\images\instagram.png" alt="" />
+            <img src={% static "..\static\images\facebook.png" %} alt="" />
+            <img src={% static "..\static\images\twitte.png" %} alt="" />
+            <img src={% static "..\static\images\instagram.png" %} alt="" />
           </div>
         </div>
       </div>

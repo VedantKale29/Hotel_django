@@ -5,7 +5,7 @@ from .forms import SignUpForm, AddRecordForm
 from .models import Record
 
 
-def Hom(request):
+def index(request):
 	records = Record.objects.all()
 	# Check to see if logging in
 	if request.method == 'POST':
@@ -16,12 +16,12 @@ def Hom(request):
 		if user is not None:
 			login(request, user)
 			messages.success(request, "You Have Been Logged In!")
-			return redirect('Hom')
+			return redirect('index')
 		else:
-			messages.success(request, "There Was An Error Logging In, Please Try Again...")
-			return redirect('Hom')
+			messages.success(request, "There Was An Error Logging In, Probably You Do Not Register Yet...")
+			return redirect('index')
 	else:
-		return render(request, 'Hom.html', {'records':records})
+		return render(request, 'index.html', {'records':records})
 
 
 
@@ -99,3 +99,21 @@ def update_record(request, pk):
 	else:
 		messages.success(request, "You Must Be Logged In...")
 		return redirect('home')
+	
+def Hom(request):
+	return render(request, 'Hom.html')
+
+def bb(request):
+	return render(request, 'bb.html')
+
+def explore(request):
+	return render(request, 'explore.html')
+
+def homePage(request):
+	return render(request, 'homePage.html')
+
+def contact(request):
+	return render(request, 'contact.html')
+
+def rooms(request):
+	return render(request, 'rooms.html')

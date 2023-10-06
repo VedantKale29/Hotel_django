@@ -1,12 +1,14 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Hotel Management</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href={% static "style.css" %}>
 </head>
 <body>
     <header>
-        <img src="hotel_logo.png" alt="Hotel Logo">
+        <img src={% static "hotel_logo.png" %} alt="Hotel Logo">
         <nav>
             <ul>
                 <li><a href="#hom">Home</a></li>
@@ -22,7 +24,7 @@
     <div id="rooms" class="content">
     <h2>Rooms</h2>
     <div class="room-card">
-        <img src="room1.jpg" alt="Room 1">
+        <img src={% static "room1.jpg" %} alt="Room 1">
         <h3>Deluxe Room</h3>
         <p>Spacious deluxe room with a king-size bed and ocean view.</p>
         <a href="#">Book Now</a>
