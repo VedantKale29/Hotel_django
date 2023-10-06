@@ -1,16 +1,17 @@
-{% load static %}
+ {% load static %} 
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
+
     <title> Magestic Hotel</title>
-    <link rel="stylesheet" type="text/css" href="..\static\css\main.css">
+    <link rel="stylesheet" type="text/css" href={% static "..\static\css\main.css" %}>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     
-     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="..\static\js\jquery.scrollUp.js"></script>
- <script type="text/javascript" src="..\static\js\demo.js"></script>
+     <script type="text/javascript" src={% static "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" %}></script>
+<script type="text/javascript" src={% static "..\static\js\jquery.scrollUp.js" %}></script>
+ <script type="text/javascript" src={% static "..\static\js\demo.js" %}></script>
     
     
     </head>
@@ -116,10 +117,10 @@
         </div>
         <br/>
     <div class="tm-media">
-        <a href="#"> <img src="..\static\images\fb.png"></a>
-        <a href="#"> <img src="..\static\images\G.png"> </a>
-        <a href="#"> <img src="..\static\images\twittr.png"> </a>
-        <a href="#">  <img src="..\static\images\insta.png"> </a>
+        <a href="#"> <img src={% static "..\static\images\fb.png" %}></a>
+        <a href="#"> <img src={% static "..\static\images\G.png" %}> </a>
+        <a href="#"> <img src={% static "..\static\images\twittr.png" %}> </a>
+        <a href="#">  <img src=>{% static "..\static\images\insta.png" %} </a>
         
         </div>
 <!--        <a href="#">  <img class="tm-up" src="..\static\images\images/up.png"> </a>-->
