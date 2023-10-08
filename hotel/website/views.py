@@ -3,9 +3,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm, AddRecordForm
 from .models import Record
+from django.contrib.auth.views import LoginView
+from django.urls import reverse_lazy
 
 
-def index(request):
+def home(request):
 	records = Record.objects.all()
 	# Check to see if logging in
 	if request.method == 'POST':
@@ -19,9 +21,13 @@ def index(request):
 			return redirect('index')
 		else:
 			messages.success(request, "There Was An Error Logging In, Probably You Do Not Register Yet...")
-			return redirect('index')
+			return redirect('home')
 	else:
-		return render(request, 'index.html', {'records':records})
+		return render(request, 'home.html') #, {'records':records}
+	
+class CustomLoginView(LoginView):
+    template_name = 'index.html'
+    success_url = reverse_lazy('index')
 
 
 
@@ -117,3 +123,6 @@ def contact(request):
 
 def rooms(request):
 	return render(request, 'rooms.html')
+
+def index(request):
+	return render(request, 'index.html')
