@@ -2,13 +2,20 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm, AddRecordForm
-from .models import Record
+from .models import Result# , Record
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 
+def go(request):
+	results = Result.objects.all()
+	context = {
+		'results' : results
+	}
+	return render(request, 'go.html', context)
+
 
 def home(request):
-	records = Record.objects.all()
+	#records = Record.objects.all()
 	# Check to see if logging in
 	if request.method == 'POST':
 		username = request.POST['username']
@@ -48,7 +55,7 @@ def register_user(request):
 			user = authenticate(username=username, password=password)
 			login(request, user)
 			messages.success(request, "You Have Successfully Registered! Welcome!")
-			return redirect('home')
+			return redirect('index')
 	else:
 		form = SignUpForm()
 		return render(request, 'register.html', {'form':form})
