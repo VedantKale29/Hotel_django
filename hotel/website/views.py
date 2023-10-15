@@ -2,14 +2,15 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm, AddRecordForm
-from .models import Result# , Record
+from .models import Hotel,Orders# , Record
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
+from math import ceil
 
 def go(request):
-	results = Result.objects.all()
+	hotels = Hotel.objects.all()
 	context = {
-		'results' : results
+		'hotels' : hotels
 	}
 	return render(request, 'go.html', context)
 
@@ -133,3 +134,80 @@ def rooms(request):
 
 def index(request):
 	return render(request, 'index.html')
+
+def main(request):
+	# hotels = Hotel.objects.all()
+	# print(hotels)
+	# n = len(hotels)
+	# nSlides = n//4 + ceil((n/4)-(n//4))
+
+	allHotel = []
+	cityHotel = Hotel.objects.values('city', 'id')
+	cats = {item['city'] for item in cityHotel}
+	
+	for cat in cats:
+		prod = Hotel.objects.filter(city=cat)
+		n = len(prod)
+		nSlides = n // 4 + ceil((n / 4) - (n // 4))
+		allHotel.append([prod, range(1, nSlides), nSlides])
+
+	# params = {'no_of_slides':nSlides, 'range': range(1,nSlides),'product': hotels}
+	# allHotel = [[hotels, range(1, nSlides), nSlides],
+	#             [hotels, range(1, nSlides), nSlides]]
+	params = {'allHotel':allHotel}
+	#image_urls = get_unsplash_images(query='hotel-rooms'),{'image_urls': image_urls}
+	return render(request, 'main.html', params)
+			
+    
+
+
+
+def checkout(request):
+    if request.method=="POST":
+        items_json= request.POST.get('itemsJson', '')
+        name=request.POST.get('name', '')
+        email=request.POST.get('email', '')
+        address=request.POST.get('address1', '') + " " + request.POST.get('address2', '')
+        city=request.POST.get('city', '')
+        state=request.POST.get('state', '')
+        zip_code=request.POST.get('zip_code', '')
+        phone=request.POST.get('phone', '')
+
+        order = Orders(items_json= items_json, name=name, email=email, address= address, city=city, state=state, zip_code=zip_code, phone=phone)
+        order.save()
+        thank=True
+        id=order.order_id
+        return render(request, 'checkout.html', {'thank':thank, 'id':id})
+    return render(request, 'checkout.html')
+
+import requests
+from django.shortcuts import render
+
+
+
+def get_unsplash_images(query):
+    # Replace 'YOUR_CLIENT_ID' with your actual Unsplash API key
+    api_key = 'YOUR_CLIENT_ID'
+    unsplash_url = f'https://api.unsplash.com/search/photos/?query={hotel-rooms}&client_id={O4yviB4Yeh_HZy0wIdPOlRr2Fx6Wpy_OetItrESRyJ0}'
+    response = requests.get(unsplash_url)
+    data = response.json()
+    
+    images = []
+    for result in data['results']:
+        images.append(result['urls']['regular'])
+    
+    return images
+
+def your_view(request):
+    hotel_images = get_unsplash_images('hotel-rooms')
+    return render(request, 'main.html', {'hotel_images': hotel_images})
+
+
+def get_images(request):
+    access_key = 'your_access_key'
+    url = f'https://api.unsplash.com/users/samuelzeller/photos&client_id=O4yviB4Yeh_HZy0wIdPOlRr2Fx6Wpy_OetItrESRyJ0&per_page=30'
+    response = requests.get(url)
+    images = response.json()
+    return render(request, 'image.html', {'images': images})
+
+    

@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Record
+#from .models import Record
 
 class SignUpForm(UserCreationForm):
         email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
@@ -39,6 +39,6 @@ class AddRecordForm(forms.ModelForm):
 	city = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"City", "class":"form-control"}), label="")
 	state = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"State", "class":"form-control"}), label="")
 
-	class Meta:
-		model = Record
-		exclude = ("user",)           
+	# class Meta:
+	# 	model = Record
+	# 	exclude = ("user",)           
