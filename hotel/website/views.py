@@ -1,11 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import SignUpForm, AddRecordForm
+from .forms import SignUpForm, AddRecordForm,PaymentForm
 from .models import Hotel,Orders# , Record
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from math import ceil
+import razorpay, json
+from .models import Payment
+from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
+from math import ceil
+
 
 def go(request):
 	hotels = Hotel.objects.all()
@@ -28,7 +34,7 @@ def home(request):
 			messages.success(request, "You Have Been Logged In!")
 			return redirect('index')
 		else:
-			messages.success(request, "There Was An Error Logging In, Probably You Do Not Register Yet...")
+			messages.error(request, "There Was An Error Logging In, Probably You Do Not Register Yet...")
 			return redirect('home')
 	else:
 		return render(request, 'home.html') #, {'records':records}
@@ -126,6 +132,9 @@ def explore(request):
 def homePage(request):
 	return render(request, 'homePage.html')
 
+def landing(request):
+	return render(request, 'landing.html')
+
 def contact(request):
 	return render(request, 'contact.html')
 
@@ -135,28 +144,105 @@ def rooms(request):
 def index(request):
 	return render(request, 'index.html')
 
-def main(request):
-	# hotels = Hotel.objects.all()
-	# print(hotels)
-	# n = len(hotels)
-	# nSlides = n//4 + ceil((n/4)-(n//4))
+# def main(request):
+# 	# 
+# 	# print(hotels)
+# 	# n = len(hotels)
+# 	# nSlides = n//4 + ceil((n/4)-(n//4))
 
-	allHotel = []
-	cityHotel = Hotel.objects.values('city', 'id')
-	cats = {item['city'] for item in cityHotel}
 	
-	for cat in cats:
-		prod = Hotel.objects.filter(city=cat)
-		n = len(prod)
-		nSlides = n // 4 + ceil((n / 4) - (n // 4))
-		allHotel.append([prod, range(1, nSlides), nSlides])
+	
+# 	for cat in cats:
+# 		prod = Hotel.objects.filter(city=cat)
+# 		n = len(prod)
+# 		allHotel.append([prod])
 
-	# params = {'no_of_slides':nSlides, 'range': range(1,nSlides),'product': hotels}
-	# allHotel = [[hotels, range(1, nSlides), nSlides],
-	#             [hotels, range(1, nSlides), nSlides]]
-	params = {'allHotel':allHotel}
-	#image_urls = get_unsplash_images(query='hotel-rooms'),{'image_urls': image_urls}
-	return render(request, 'main.html', params)
+# 	# params = {'no_of_slides':nSlides, 'range': range(1,nSlides),'product': hotels}
+# 	# allHotel = [[hotels, range(1, nSlides), nSlides],
+# 	#             [hotels, range(1, nSlides), nSlides]]
+# 	params = {'allHotel':allHotel}
+# 	#image_urls = get_unsplash_images(query='hotel-rooms'),{'image_urls': image_urls}
+
+# 	hotels = Hotel.objects.all()
+# 	allHotel = []
+# 	cityHotel = Hotel.objects.values('city', 'id')
+# 	cats = {item['city'] for item in cityHotel}
+
+# 	sort_by = request.GET.get('sort_by')
+# 	search = request.GET.get('search')
+# 	city = request.GET.getlist('hotel.city')
+# 	print(city)
+# 	if sort_by:
+# 		if sort_by == 'ASC':
+# 			hotels_objs = hotels_objs.order_by('hotel.amount')
+# 		elif sort_by == 'DSC':
+# 			hotels_objs = hotels_objs.order_by('-hotel.amount')
+
+# 	if search:
+# 		hotel = hotel.filter(
+# 			Q(hotel_name__icontains = search) |
+# 			Q(description__icontains = search) )
+
+
+# 	# if len(amenities):
+# 	# 	hotels_objs = hotels_objs.filter(amenities__amenity_name__in = amenities).distinct()
+
+
+
+# 	context = {'hotel.city' : hotel.city , 'hotel' : hotel , 'sort_by' : sort_by , 'search' : search , 'hotels' : hotels}
+# 	return render(request , 'main.html' ,context)
+
+
+
+
+def main(request):
+    allHotel = []
+
+    # Get the list of unique cities from your Hotel model
+    cityHotel = Hotel.objects.values('city').distinct()
+    cities = [item['city'] for item in cityHotel]
+
+    # Get the sorting parameter (ASC or DSC) from the request
+    sort_by = request.GET.get('sort_by')
+    search = request.GET.get('search')
+    selected_cities = request.GET.getlist('city')
+
+    # Query the Hotel model and apply filtering
+    hotels = Hotel.objects.all()
+
+    # Check if the sort_by parameter is valid (either 'ASC' or 'DSC')
+    if sort_by in ['ASC', 'DSC']:
+        if sort_by == 'ASC':
+            hotels = hotels.order_by('amount')
+        elif sort_by == 'DSC':
+            hotels = hotels.order_by('-amount')
+
+    if search:
+        hotels = hotels.filter(
+            name__icontains=search
+        )
+
+    if selected_cities:
+        hotels = hotels.filter(city__in=selected_cities)
+
+    # Group the hotels by cities
+    for city in cities:
+        city_hotels = hotels.filter(city=city)
+        allHotel.append((city, city_hotels))
+
+    context = {
+        'allHotel': allHotel,
+        'sort_by': sort_by,
+        'search': search,
+        'selected_cities': selected_cities,
+        'cities': cities,
+    }
+
+    return render(request, 'main.html', context)
+
+
+
+
 			
     
 
@@ -205,9 +291,42 @@ def your_view(request):
 
 def get_images(request):
     access_key = 'your_access_key'
-    url = f'https://api.unsplash.com/users/samuelzeller/photos&client_id=O4yviB4Yeh_HZy0wIdPOlRr2Fx6Wpy_OetItrESRyJ0&per_page=30'
+    url = f'https://api.unsplash.com/search/photos?query=hotel%20room&client_id=O4yviB4Yeh_HZy0wIdPOlRr2Fx6Wpy_OetItrESRyJ0&per_page=30'
     response = requests.get(url)
     images = response.json()
     return render(request, 'image.html', {'images': images})
 
+
+
+
+
+def getway(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        amount = int(request.POST.get('amount')) * 100
+        client = razorpay.Client(auth =("rzp_test_68NRIUb8rBe2xC" , "Ge9g6zHGJXx9JEdKZITrffrZ"))
+        payment = client.order.create({'amount':amount, 'currency':'INR',
+                              'payment_capture':'1' })
+        
+        pay = Payment(name = name , amount =amount , order_id = payment['id'])
+        pay.save()
+        
+        return render(request, 'payment.html' ,{'payment':payment})
+    return render(request, 'payment.html')
+
+@csrf_exempt
+def payment_status(request):
+    if request.method == "POST":
+        a =  (request.POST)
+        order_id = ""
+        for key , val in a.items():
+            if key == "razorpay_order_id":
+                order_id = val
+                break
     
+        user = Payment.objects.filter(order_id = order_id).first()
+        user.paid = True
+        user.save()
+        
+
+    return render(request, "payment_status.html")

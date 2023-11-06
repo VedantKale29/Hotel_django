@@ -1,4 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
+from .models import Payment
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit
 from django.contrib.auth.models import User
 from django import forms
 #from .models import Record
@@ -41,4 +44,20 @@ class AddRecordForm(forms.ModelForm):
 
 	# class Meta:
 	# 	model = Record
-	# 	exclude = ("user",)           
+	# 	exclude = ("user",)      
+
+
+
+class PaymentForm(forms.ModelForm):
+    class Meta:
+        model = Payment
+        fields = "__all__"
+
+    def __init__(*args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            'name',
+            'amount',
+            Submit('submit', 'Buy', css_class='button white btn-block btn-primary')
+        )

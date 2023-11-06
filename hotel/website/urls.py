@@ -1,9 +1,12 @@
 from django.urls import path
 from . import views
+from .views import getway, payment_status
+
 
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('home/', views.home, name='home'),
+    path('', views.landing, name='landing'),
     path('index/', views.index, name='index'),
     path('checkout/', views.checkout, name='checkout'),
     path('go/', views.go, name='go'),
@@ -23,6 +26,9 @@ urlpatterns = [
     path('rooms/', views.rooms, name='rooms'),
     path('homePage/', views.homePage, name='homePage'),
     path('images/', views.get_images, name='get_images'),
+    path('payment/', views.getway, name='getway'),
+    path('payment_status/', payment_status, name='payment_status'),
+    path('main/<str:city>/', views.main, name='filtered_main'),
 
 
 ]

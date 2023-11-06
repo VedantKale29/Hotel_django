@@ -1,3 +1,4 @@
+
 {% load static %}
 <!doctype html>
 <html lang="en">
@@ -5,120 +6,363 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    <link rel="stylesheet" href={% static "..\static\css\harry.css" %} />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/main.css">
   </head>
   <body>
-
-
-    <h1></h1>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="/index/">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+           
+           
+              
+             
+          
+          
+            <button class="btn btn-outline-success" type="submit" style="float: right;">
+              <div class="container-fluid">
+                <a href= "/logout/" style="color: white; text-decoration: none;">
+              Sign out
+                </a>
+            </button>
           </form>
         </div>
       </div>
     </nav>
 
+    {% comment "" %}
     <div class="container">
-
       <!--Slideshow starts here -->
       {% for hotel, range, nSlides in allHotel %}
       <h5 class="my-4">{{hotel.0.city}} - Recommended Items</h5>
-  <div id="demo{{forloop.counter}}" class="carousel slide my-3" data-ride="carousel">
-      <ul class="carousel-indicators">
-        <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
-  
-         {% for i in range %}
-        <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}" ></li>
-        {% endfor %}
-      </ul>
-  
-  
-      <div class="container carousel-inner no-padding">
-  
-        <div class="carousel-item active">
-          <div class="col-xs-8 col-sm-8 col-md-8">
-            <div class="card" style="width: 50rem;">
-              {% comment %} <img src='/media/{{hotel.0.image}}' class="card-img-top" alt="..."> {% endcomment %}
-              {% for image in images %}
-              <img src="{{ image.urls.small }}" alt="{{ image.description }}">
-              {% endfor %}
-              <div class="card-body">
+      <div
+        id="demo{{forloop.counter}}"
+        class="carousel slide my-3"
+        data-ride="carousel"
+      >
+        <ul class="carousel-indicators">
+          <li
+            data-target="#demo{{forloop.counter}}"
+            data-slide-to="0"
+            class="active"
+          ></li>
+
+          {% for i in range %}
+          <li
+            data-target="#demo{{forloop.parentloop.counter}}"
+            data-slide-to="{{i}}"
+          ></li>
+          {% endfor %}
+        </ul>
+
+        <div class="container carousel-inner no-padding">
+          <div class="carousel-item active">
+            {% for i in product %}
+            <div class="col-xs-8 col-sm-8 col-md-8">
+              <div class="card" style="width: 80rem">
+                {% comment %}
+                <img
+                  src="/media/{{hotel.0.image}}"
+                  class="card-img-top"
+                  alt="..."
+                />
+                {% endcomment %} {% comment "" %}{% for image in images %}
+                <img
+                  src="{{ image.urls.small }}"
+                  alt="{{ image.description }}"
+                />
+                {% endfor %}
+                <div class="card-body">
                   <h5 class="card-title">{{hotel.0.name}}</h5>
                   <p class="card-text">{{hotel.0.location}}</p>
                   <p class="card-text">Rs.{{hotel.0.amount}}</p>
                   <a href="/Hom/" class="btn btn-primary">Explore</a>
+                </div>
               </div>
             </div>
-         </div>
-  
-  
-          {% for i in hotel|slice:"1:"%}
-          <div class="col-xs-3 col-sm-3 col-md-3">
-            <div class="card" style="width: 18rem;">
-              <img src='/media/{{i.image}}█' class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">{{i.name}}</h5>
-                <p class="card-text">{{i.location}}</p>
-                <p class="card-text">Rs{{i.amount}}</p>
-                <a href="/Hom/" class="btn btn-primary">Explore</a>
+
+            {% endfor %} {% for i in hotel|slice:"1:"%}
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <div class="card" style="width: 18rem">
+                <img src="/media/{{i.image}}" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title">{{i.name}}</h5>
+                  <p class="card-text">{{i.location}}</p>
+                  <p class="card-text">Rs{{i.amount}}</p>
+                  <a href="/Hom/" class="btn btn-primary">Explore</a>
+                </div>
               </div>
             </div>
+            {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not
+            forloop.last %}
           </div>
-          {% if forloop.counter|divisibleby:3 and forloop.counter > 0 and not forloop.last %}
-        </div><div class="carousel-item">
-          {% endif %}
-  
-          {% endfor %}
+          <div class="carousel-item">{% endif %} {% endfor %}</div>
+        </div>
       </div>
-  
-  
-  
-  </div>
-  </div>
       <!-- left and right controls for the slide -->
-      <a class="carousel-control-prev" href="#demo{{forloop.counter}}" data-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
+      <a
+        class="carousel-control-prev"
+        href="#demo{{forloop.counter}}"
+        data-slide="prev"
+      >
+        <span class="carousel-control-prev-icon"></span>
       </a>
-      <a class="carousel-control-next" href="#demo{{forloop.counter}}" data-slide="next">
-          <span class="carousel-control-next-icon"></span>
+      <a
+        class="carousel-control-next"
+        href="#demo{{forloop.counter}}"
+        data-slide="next"
+      >
+        <span class="carousel-control-next-icon"></span>
       </a>
       {% endfor %}
+    </div>
+    {% endcomment %} {% comment %}
+    <div class="container">
+      {% endcomment %}
+      <!--Slideshow starts here -->
+      {% comment %} {% for hotel, range, nSlides in allHotel %}
+      <h5 class="my-4">{{hotel.0.city}} - Recommended Items</h5>
+      <div
+        id="demo{{forloop.counter}}"
+        class="carousel slide my-3"
+        data-ride="carousel"
+      >
+        <ul class="carousel-indicators">
+          <li
+            data-target="#demo{{forloop.counter}}"
+            data-slide-to="0"
+            class="active"
+          ></li>
+
+          {% for i in range %}
+          <li
+            data-target="#demo{{forloop.parentloop.counter}}"
+            data-slide-to="{{i}}"
+          ></li>
+          {% endfor %}
+        </ul>
+
+        <div class="container carousel-inner no-padding">
+          <div class="carousel-item active">
+            {% for i in hotel %}
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <div class="card" style="width: 18rem">
+                <img src="/media/{{i.image}}" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title">{{hotel.0.name}}</h5>
+                  <p class="card-text">{{hotel.0.location}}</p>
+                  <p class="card-text">Rs.{{hotel.0.amount}}</p>
+                  <a href="/Hom/" class="btn btn-primary">Explore</a>
+                </div>
+              </div>
+            </div>
+            {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and
+            notforloop.last %}
+          </div>
+          <div class="carousel-item">{% endif %}{% endfor %}</div>
+        </div>
+      </div>
+      <!-- left and right controls for the slide -->
+      <a
+        class="carousel-control-prev"
+        href="#demo{{forloop.counter}}"
+        data-slide="prev"
+      >
+        <span class="carousel-control-prev-icon"></span>
+      </a>
+      <a
+        class="carousel-control-next"
+        href="#demo{{forloop.counter}}"
+        data-slide="next"
+      >
+        <span class="carousel-control-next-icon"></span>
+      </a>
+      {% endfor %}
+    </div>
+
+    {% block js %}
+    <script>
+      console.log("working");
+      if (localStorage.getItem("cart") == null) {
+        var cart = {};
+      } else {
+        cart = JSON.parse(localStorage.getItem("cart"));
+        document.getElementById("cart").innerHTML = Object.keys(cart).length;
+      }
+      $(".cart").click(function () {
+        console.log("clicked");
+        var idstr = this.id.toString();
+        console.log(idstr);
+        if (cart[idstr] != undefined) {
+          cart[idstr] = cart[idstr] + 1;
+        } else {
+          cart[idstr] = 1;
+        }
+        console.log(cart);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        document.getElementById("cart").innerHTML = Object.keys(cart).length;
+      });
+    </script>
+    {% endblock %} {% endcomment %}
+
+
+
+
+
+
+
+     {% comment %} <div class="container hotels-container">
+
+        <div class="row mt-2 justify-content-between">
+            <div class="col-md-8 text-white align-self-center mb-2 p-4">
+                <h1>HOTEL Place</h1>
+                <span class=""> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum debitis perspiciatis sed iusto
+                    eveniet neque natus quidem velit optio cumque saepe repudiandae vero, sit hic adipisci laudantium libero blanditiis
+                    animi.
+                </span>
+            </div>
+           
+        </div>
+    </div>  {% endcomment %}
+
+  <div class="row mt-2 justify-content-between">
+      <div class="filter-card">
+          <h5>Filter</h5>
+          <form action="#">
+              <div class="row form-group">
+                  <div class="col-md-6">
+                      <label for="mintopay">Check in</label>
+                      <p>
+                          <input type="date" name="checkin" id="checkin" class="form-control">
+                      </p>
+                  </div>
+                  <div class="col-md-6">
+                      <label for="maxtopay">Check out</label>
+                      <p>
+                          <input type="date" name="checkout" id="checkout" class="form-control">
+                      </p>
+                  </div>
+              </div>
+             
+              <div class="row form-group">
+                  <div class="col-md-12">
+                      <input type="submit" class="btn btn-primary btn-block" value="Reset">
+                  </div>
+              </div>
+          </form>
+      </div>
+
   </div>
+</div>
+
+          <div class="col-lg-9  px-4 mb-5">
+              <form method="GET" action="{% url 'main' %} "id="hotel-filter-form">
+                  <div class="row mt-3">
+                      <div class="col-md-4">
+                          <div class="form-inline">
+                              <label class="" for="sort_by">Sort by</label>
+                              <select class="form-control" name="sort_by" id="sort_by">
+                                  <option value="">Recommended</option>
+                                  <option {% if sort_by == 'ASC' %} selected {% endif %} value="ASC">ASC</option>
+                                  <option {% if sort_by == 'DSC' %} selected {% endif %} value="DSC">DSC</option>
+                              </select>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                          <div class="form-inline">
+                              <label class="" for="search">Search</label>
+                              <input name="search" class="form-control" value="{{ search }}" placeholder="Search">
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                          <div class="form-inline">
+                              <label class="" for="city">City</label>
+                              <select name="city" class="form-control" multiple>
+                                  <option value="">Choose</option>
+                                  {% for city in cities %}
+                                      <option {% if city in selected_cities %} selected {% endif %} value="{{ city }}">{{ city }}</option>
+                                  {% endfor %}
+                              </select>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                          <button style="margin-top: 30px;" type="submit" class="btn btn-success">Find</button>
+                      </div>
+                  </div>
+              </form>
+
+              {% for city, city_hotels in allHotel %}
+              <h3>{{ city }}</h3>
+              {% for hotel in city_hotels %}
+              <div class="row search-card-result">
+                  <div class="col-md-3">
+                      <a href="/hotel-detail/{{ hotel.id }}">
+                          <img class="img-fluid" src="/media/{{ hotel.images.first.images }}" alt="Card image cap">
+                      </a>
+                  </div>
+                  <div class="col-md-5">
+                      <h5>{{ hotel.name }}</h5>
+                      <p>
+                          {{ hotel.location|truncatechars:150 }}
+                      </p>
+                      <p>
+                          {% for city in hotel.ci.all %}
+                          <b>{{ hotel.city }}</b>,
+                          {% endfor %}
+                      </p>
+                  </div>
+                  <div class="col-md-2 border-left text-center more-offers">
+                      <p>Rating {{hotel.star_rating}}</p>
+                      <p>Rs. {{ hotel.amount }}</p>
+                      <p>Room count=10</p>
+                      <p>{{ hotel.room_count }}</p>
+                  </div>
+                  <div class="col-md-2 border-left text-center more-offers">
+                      <div class="btn btn-success"><a href='/Hom/' style="text-decoration: none; color: white;">Explore</a></div>
+                  </div>
+              </div>
+              {% endfor %}
+              {% endfor %}
+          </div>
+      </div>
+  </div>
+</section>
+
+<script>
+  // Get the sorting select element
+  const sortSelect = document.getElementById('sort_by');
+
+  // Add an event listener for changes in the select element
+  sortSelect.addEventListener('change', function() {
+      // Submit the form when a new option is selected
+      document.getElementById('hotel-filter-form').submit();
+  });
+</script>
+
+
+
+
+
   </body>
 </html>

@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 
@@ -51,6 +53,23 @@ class Orders(models.Model):
     state=models.CharField(max_length=111)
     zip_code=models.CharField(max_length=111)
     phone=models.CharField(max_length=111, default="")
+    user = models.CharField(User,max_length=100)
+    start_date = models.DateField(default=timezone.now)
+    end_date = models.DateField(default=timezone.now)
 
     def __str__(self):
         return(f"{self.name}")
+    
+
+class Payment(models.Model):
+    name = models.CharField(max_length=100)
+    amount = models.CharField(max_length=100)
+    order_id = models.CharField(max_length=100, blank=True)
+    razorpay_payment_id = models.CharField(max_length=100, blank=True)
+    paid = models.BooleanField(default=False)
+    
+
+
+
+
+
